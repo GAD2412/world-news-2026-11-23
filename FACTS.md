@@ -16,14 +16,19 @@ CONFIRMED = two or more outlets; OFFICIAL = an on-record statement or filing; RE
 ## Cards
 4. Tajikistan formally notifies the UN it will leave the ICC — the fourth country since the US push in July. CONFIRMED — Al Jazeera · Reuters
 5. Russia's foreign ministry accuses Estonia of "hostile actions" and says it is on the verge of triggering "open war". OFFICIAL (Russian MFA) — Al Jazeera
-6. Belgium: national anti-austerity strike; Brussels Airport cancels all flights 06:00–20:00 UTC. OFFICIAL (airport statement) — Al Jazeera (two reports)
-7. Seoul: Kospi slides as much as 5.8% and closes down 3.3% on AI fears; Samsung -3.1%, SK Hynix -2.5%. REPORTED — Al Jazeera (Korea JoongAng Daily also reports a 3%+ fall)
+6. Belgium: national anti-austerity strike; air traffic control (Skeyes) stops regular service 07:00–21:00 local (06:00–20:00 UTC)
+   and Brussels Airport cancels 404 of its 429 flights (not literally all). CONFIRMED — Al Jazeera (two reports) · Brussels Times ·
+   IBTimes UK
+7. Seoul: Kospi slides as much as 5.8% and closes down 3.31% at 4,708.54 on AI fears; Samsung -3.06%, SK Hynix -2.52%.
+   CONFIRMED — Al Jazeera · Korea JoongAng Daily
 8. India pledges a $1.62bn package to Nepal as PM Balendra Shah meets Modi in New Delhi. OFFICIAL — Al Jazeera (joint statement, Hyderabad House)
 9. Colombia: drone attack on a police base in Cúcuta injures three civilians including an infant, damages 60 homes; first urban drone attack. CONFIRMED — Al Jazeera · Colombia Reports
 10. US Treasury sanctions more than two dozen Iranian entities in "shadow banking" networks. OFFICIAL — Al Jazeera
 11. Gaza: Oxfam-backed findings say Israel's destruction left a "toxic wasteland"; pollution in 99% of Gaza. CONFIRMED — Al Jazeera · Guardian
-12. Cricket: New Zealand bat 120 overs to 239-5 and draw the first Test with India in Wellington. REPORTED — Al Jazeera
-13. Europe: Dutch TTF gas rises as much as 8.6% to €96.08 on a forecast cold snap, settles +4% at €92.50. REPORTED — Guardian
+12. Cricket: New Zealand bat 120 overs to 239-5 and draw the first Test with India in Wellington. CONFIRMED — Al Jazeera ·
+    AFP via France 24 · ABC (Australia)
+13. Europe: Dutch TTF gas rises as much as 8.6% to €96.08 on a forecast cold snap, settles +4% at €92.50. CONFIRMED — Guardian ·
+    The News (Pakistan) · Yahoo Finance
 
 ## Briefs (one line each)
 Yemen: air raid kills at least 8 in Houthi-held Hodeidah (Al Jazeera) · Gaza: Israeli strikes kill 3 including an UNRWA worker

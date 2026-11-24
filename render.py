@@ -151,16 +151,16 @@ CARDS = [
          head='Russia warns Estonia of "open war"',
          dek='Foreign ministry accuses Tallinn of "hostile actions".',
          src='Russian MFA via Al Jazeera'),
-    dict(n=6, region='EUROPE', field='LABOUR', place='BRUSSELS', when='06-20 UTC', status='OFFICIAL',
+    dict(n=6, region='EUROPE', field='LABOUR', place='BRUSSELS', when='06-20 UTC', status='CONFIRMED',
          art='plane', ll=(4.5, 50.9), label='STRIKE',
          head='Strike grounds Belgian flights',
-         dek='Brussels Airport cancels all flights in a national strike.',
-         src='Brussels Airport via Al Jazeera'),
-    dict(n=7, region='ASIA-PACIFIC', field='MARKETS', place='SEOUL', when='CLOSE 06:30 UTC', status='REPORTED',
+         dek='Brussels Airport cancels 404 of 429 flights.',
+         src='Al Jazeera · Brussels Times'),
+    dict(n=7, region='ASIA-PACIFIC', field='MARKETS', place='SEOUL', when='CLOSE 06:30 UTC', status='CONFIRMED',
          art='chart', ll=(127.0, 37.5), label='KOSPI',
          head='AI fears knock Seoul stocks',
          dek='Kospi falls as much as 5.8%, closes down 3.3%; Samsung -3.1%.',
-         src='Al Jazeera'),
+         src='Al Jazeera · JoongAng Daily'),
     dict(n=8, region='SOUTH ASIA', field='DIPLOMACY', place='NEW DELHI', when='MON', status='OFFICIAL',
          art='money', ll=(77.2, 28.6), label='AID',
          head='India pledges $1.62bn to Nepal',
@@ -181,16 +181,16 @@ CARDS = [
          head='Gaza left a "toxic wasteland"',
          dek='Pollution found in 99% of the strip; water and soil poisoned.',
          src='Al Jazeera · Guardian'),
-    dict(n=12, region='ASIA-PACIFIC', field='CRICKET', place='WELLINGTON', when='MON (NZT)', status='REPORTED',
+    dict(n=12, region='ASIA-PACIFIC', field='CRICKET', place='WELLINGTON', when='MON (NZT)', status='CONFIRMED',
          art='cricket', ll=(174.8, -41.3), label='DRAWN',
          head='New Zealand hold out to draw Test',
          dek='They bat 120 overs to 239-5 to deny India victory.',
-         src='Al Jazeera'),
-    dict(n=13, region='EUROPE', field='ENERGY', place='AMSTERDAM (TTF)', when='MON', status='REPORTED',
+         src='Al Jazeera · AFP · ABC'),
+    dict(n=13, region='EUROPE', field='ENERGY', place='AMSTERDAM (TTF)', when='MON', status='CONFIRMED',
          art='gas', ll=(4.9, 52.4), label='GAS PRICE',
          head='Cold-snap fears lift European gas',
          dek='Benchmark up as much as 8.6% to €96.08, closes +4%.',
-         src='Guardian'),
+         src='Guardian · The News'),
 ]
 BRIEFS = [  # region, place, text, outlet, status, field
     ('MIDDLE EAST', 'Yemen', 'air raid kills at least 8 in Houthi-held Hodeidah', 'Al Jazeera', 'REPORTED', 'WAR'),
@@ -364,93 +364,163 @@ def art_singer(x, y, w, h):
     text(bx + 10, y + 74, 'and artistic work', 'demi', 11, GREY)
 
 
+def flag(x, y, w, h, stripes, vertical=False):
+    """A plain striped flag (only flags made of stripes are drawn)."""
+    n = len(stripes)
+    for k, c in enumerate(stripes):
+        if vertical:
+            rect(x + w * k / n, y, x + w * (k + 1) / n, y + h, fill=c)
+        else:
+            rect(x, y + h * k / n, x + w, y + h * (k + 1) / n, fill=c)
+    rect(x, y, x + w, y + h, outline=(120, 120, 120), width=0.6)
+
+
 def art_icc(x, y, w, h):
-    sky(x, y, w, h, (226, 232, 242), (244, 246, 250))
-    cx = x + 52
-    line([(cx, y + 10), (cx, y + h - 6)], (90, 96, 110), 2.5)
-    line([(cx - 26, y + 16), (cx + 26, y + 16)], (90, 96, 110), 2.5)
-    for sx in (cx - 26, cx + 26):
-        d.pieslice(P(sx - 11, y + 22, sx + 11, y + 40), 0, 180, fill=(200, 170, 90))
-    rect(cx - 14, y + h - 8, cx + 14, y + h - 4, fill=(90, 96, 110))
-    text(x + w - 8, y + 8, '4th exit', 'black', 17, (16, 136, 118), 'ra')
+    sky(x, y, w, h, (226, 232, 242), (246, 248, 252))
+    # the court: columns and pediment, a figure walking out through an arrowed door
+    bx = x + 30
+    poly([(bx, y + 30), (bx + 32, y + 22), (bx + 64, y + 30)], (120, 128, 146))
+    for k in range(4):
+        rect(bx + 6 + k * 15, y + 31, bx + 11 + k * 15, y + h - 7, fill=(170, 176, 190))
+    rect(bx - 2, y + h - 7, bx + 66, y + h - 3, fill=(120, 128, 146))
+    text(bx + 32, y + 23.5, 'ICC', 'heavy', 6.5, (255, 255, 255), 'ma')
+    line([(bx + 70, y + 40), (bx + 90, y + 40)], RED, 2.5)
+    poly([(bx + 90, y + 35), (bx + 98, y + 40), (bx + 90, y + 45)], RED)
+    text(x + w - 8, y + 4, '4th', 'black', 20, (16, 136, 118), 'ra')
+    text(x + w - 8, y + 25, 'to leave', 'demi', 9.5, GREY, 'ra')
 
 
 def art_border(x, y, w, h):
-    sky(x, y, w, h, (220, 228, 236), (238, 242, 246))
-    rect(x + w / 2 - 2, y, x + w / 2 + 2, y + h, fill=(150, 40, 40))
-    for k in range(4):
-        rect(x + w / 2 - 14, y + 8 + k * 12, x + w / 2 + 14, y + 12 + k * 12, fill=(200, 60, 50))
-    text(x + w / 2 - 20, y + 22, 'RUSSIA', 'heavy', 11, INK, 'ra')
-    text(x + w / 2 + 20, y + 22, 'ESTONIA', 'heavy', 11, INK)
+    sky(x, y, w, h, (214, 224, 236), (236, 240, 246))
+    rect(x, y + h - 12, x + w, y + h, fill=(150, 150, 150))
+    # boom barrier across the road
+    px = x + w / 2 - 30
+    rect(px - 3, y + 16, px + 3, y + h - 12, fill=(80, 80, 86))
+    for k in range(6):
+        rect(px + k * 12, y + 20, px + k * 12 + 12, y + 26, fill=(210, 40, 40) if k % 2 == 0 else (250, 250, 250))
+    flag(x + 18, y + 24, 22, 14, [(255, 255, 255), (0, 57, 166), (213, 43, 30)])
+    flag(x + w - 40, y + 24, 22, 14, [(0, 114, 206), (0, 0, 0), (255, 255, 255)])
+    line([(x + 18, y + 24), (x + 18, y + h - 12)], (90, 90, 96), 1)
+    line([(x + w - 18, y + 24), (x + w - 18, y + h - 12)], (90, 90, 96), 1)
+    poly([(x + w / 2 + 20, y + 30), (x + w / 2 + 30, y + 12), (x + w / 2 + 40, y + 30)], (240, 170, 30))
+    text(x + w / 2 + 30, y + 17, '!', 'heavy', 11, INK, 'ma')
 
 
 def art_plane(x, y, w, h):
-    sky(x, y, w, h, (200, 214, 230), (232, 238, 246))
-    rect(x, y + h - 10, x + w, y + h, fill=(130, 130, 136))
-    px, py = x + 70, y + h - 22
-    poly([(px - 34, py + 4), (px + 30, py - 2), (px + 36, py + 2), (px - 30, py + 8)], (90, 100, 120))
-    poly([(px - 6, py + 2), (px + 6, py - 14), (px + 12, py - 14), (px + 6, py + 4)], (90, 100, 120))
-    line([(x + 120, y + 10), (x + 150, y + 40)], RED, 4)
-    line([(x + 150, y + 10), (x + 120, y + 40)], RED, 4)
+    sky(x, y, w, h, (196, 210, 228), (228, 236, 246))
+    rect(x, y + h - 12, x + w, y + h, fill=(110, 112, 118))
+    for k in range(6):
+        rect(x + 10 + k * 30, y + h - 7, x + 24 + k * 30, y + h - 5, fill=(240, 240, 240))
+    px, py = x + 52, y + h - 24
+    ell(px, py, 34, 6, fill=(236, 238, 242))
+    poly([(px - 6, py), (px + 10, py), (px - 4, py + 16), (px - 16, py + 16)], (200, 204, 212))
+    poly([(px - 30, py - 2), (px - 22, py - 2), (px - 30, py - 18), (px - 36, py - 18)], (200, 204, 212))
+    for k in range(6):
+        ell(px - 14 + k * 7, py - 1, 1.5, 1.5, fill=(80, 100, 140))
+    rect(x + w - 74, y + 6, x + w - 6, y + 30, fill=(20, 24, 30), r=2)
+    text(x + w - 40, y + 7, 'CANCELLED', 'heavy', 9, (255, 90, 80), 'ma')
+    text(x + w - 40, y + 17, '404 flights', 'heavy', 9, (255, 200, 80), 'ma')
 
 
 def art_chart(x, y, w, h):
-    rect(x, y, x + w, y + h, fill=(20, 26, 36))
-    pts = [(x + 10, y + 16), (x + 30, y + 12), (x + 50, y + 20), (x + 70, y + 18), (x + 90, y + 34),
-           (x + 110, y + 44), (x + 125, y + 38)]
-    line(pts, (230, 60, 50), 2.5)
-    text(x + w - 8, y + 8, '-3.3%', 'black', 18, (240, 90, 80), 'ra')
+    rect(x, y, x + w, y + h, fill=(18, 24, 34))
+    for k in range(4):
+        line([(x + 6, y + 10 + k * 11), (x + 118, y + 10 + k * 11)], (40, 48, 62), 1)
+    pts = [(x + 8, y + 14), (x + 24, y + 12), (x + 40, y + 18), (x + 56, y + 16), (x + 72, y + 30),
+           (x + 88, y + 42), (x + 102, y + 46), (x + 116, y + 38)]
+    poly(pts + [(x + 116, y + h - 4), (x + 8, y + h - 4)], (70, 30, 36))
+    line(pts, (240, 70, 60), 2.5)
+    text(x + w - 8, y + 4, '-3.3%', 'black', 18, (255, 100, 90), 'ra')
+    text(x + w - 8, y + 24, 'close 4,708', 'demi', 9.5, (200, 200, 210), 'ra')
 
 
 def art_money(x, y, w, h):
     sky(x, y, w, h, (236, 228, 210), (246, 240, 228))
-    ell(x + 40, y + h / 2 + 4, 18, 18, fill=(200, 150, 50))
-    text(x + 40, y + h / 2 + 4, '$', 'black', 18, (255, 250, 230), 'mm')
-    text(x + w - 8, y + 10, '$1.62bn', 'black', 18, (196, 64, 128), 'ra')
+    flag(x + 12, y + 22, 26, 17, [(255, 153, 51), (255, 255, 255), (19, 136, 8)])
+    ell(x + 25, y + 30.5, 2.2, 2.2, outline=(0, 0, 128), width=0.8)
+    # Nepal: two stacked crimson pennants with a blue edge
+    nx, ny = x + 76, y + 20
+    poly([(nx, ny), (nx + 20, ny + 12), (nx + 8, ny + 12), (nx + 20, ny + 26), (nx, ny + 26)], (0, 56, 147))
+    poly([(nx + 1.5, ny + 2.5), (nx + 16, ny + 11), (nx + 4, ny + 11), (nx + 16, ny + 24.5), (nx + 1.5, ny + 24.5)],
+         (220, 20, 60))
+    line([(x + 44, y + 31), (x + 68, y + 31)], (150, 110, 40), 2)
+    poly([(x + 66, y + 27), (x + 72, y + 31), (x + 66, y + 35)], (150, 110, 40))
+    text(x + w - 8, y + 6, '$1.62bn', 'black', 17, (196, 64, 128), 'ra')
 
 
 def art_drone(x, y, w, h):
-    sky(x, y, w, h, (214, 224, 236), (236, 240, 246))
-    for k, (bw, bh) in enumerate([(26, 18), (30, 24), (22, 16), (28, 20)]):
+    sky(x, y, w, h, (212, 222, 236), (236, 240, 246))
+    for k, (bw, bh) in enumerate([(26, 18), (30, 26), (22, 16), (28, 20)]):
         bx = x + 6 + k * 30
-        rect(bx, y + h - bh, bx + bw, y + h, fill=(176, 150, 120) if k != 1 else (130, 100, 80))
-    dx, dy = x + 70, y + 14
-    rect(dx - 8, dy - 3, dx + 8, dy + 3, fill=(50, 50, 56))
-    for ox in (-14, 14):
-        line([(dx, dy), (dx + ox, dy - 4)], (50, 50, 56), 1.5)
-        ell(dx + ox, dy - 5, 5, 1.5, fill=(80, 80, 86))
-    text(x + w - 8, y + 8, '60 homes', 'black', 15, (124, 46, 164), 'ra')
+        rect(bx, y + h - bh, bx + bw, y + h, fill=(186, 160, 128) if k != 1 else (140, 108, 84))
+        rect(bx + 5, y + h - bh + 5, bx + 10, y + h - bh + 10, fill=(90, 110, 140))
+    line([(x + 40, y + h - 24), (x + 48, y + h - 14), (x + 44, y + h - 6)], INK, 1)
+    dx, dy = x + 110, y + 34
+    rect(dx - 7, dy - 3, dx + 7, dy + 3, fill=(46, 48, 54), r=1)
+    for ox, oy in ((-12, -5), (12, -5), (-12, 5), (12, 5)):
+        line([(dx, dy), (dx + ox, dy + oy)], (46, 48, 54), 1.4)
+        ell(dx + ox, dy + oy, 5, 1.6, fill=(110, 110, 118))
+    text(x + w - 8, y + 6, '60 homes', 'black', 15, (124, 46, 164), 'ra')
 
 
 def art_sanctions(x, y, w, h):
     sky(x, y, w, h, (226, 232, 242), (244, 246, 250))
-    rect(x + 16, y + 6, x + 62, y + h - 4, fill=(255, 255, 255), outline=GREY, width=0.8)
+    rect(x + 28, y + 23, x + 80, y + h + 4, fill=(255, 255, 255), outline=GREY, width=0.8)
     for k in range(4):
-        line([(x + 22, y + 14 + k * 7), (x + 56, y + 14 + k * 7)], RULE, 1.5)
-    text(x + w - 8, y + 8, '24+ targets', 'black', 15, (40, 92, 170), 'ra')
+        line([(x + 34, y + 29 + k * 6), (x + 74, y + 29 + k * 6)], RULE, 1.5)
+    stamp = Image.new('RGBA', (70 * S, 20 * S), (0, 0, 0, 0))
+    sd = ImageDraw.Draw(stamp)
+    sd.rounded_rectangle((1 * S, 1 * S, 69 * S, 19 * S), radius=2 * S, outline=(200, 40, 40, 235), width=2 * S)
+    sd.text((35 * S, 10 * S), 'SANCTIONED', font=font('heavy', 9), fill=(200, 40, 40, 235), anchor='mm')
+    stamp = stamp.rotate(14, resample=Image.BICUBIC, expand=True)
+    img.paste(stamp, (int((x + 40) * S), int((y + 24) * S)), stamp)
+    text(x + w - 8, y + 4, '24+', 'black', 18, (40, 92, 170), 'ra')
+    text(x + w - 8, y + 24, 'entities', 'demi', 9.5, GREY, 'ra')
 
 
 def art_toxic(x, y, w, h):
-    sky(x, y, w, h, (214, 206, 180), (230, 222, 200))
-    poly([(x + 40, y + 8), (x + 54, y + 30), (x + 40, y + 44), (x + 26, y + 30)], (90, 120, 60))
-    ell(x + 40, y + 32, 14, 12, fill=(90, 120, 60))
-    text(x + w - 8, y + 8, '99%', 'black', 20, (184, 44, 40), 'ra')
+    sky(x, y, w, h, (210, 200, 176), (228, 218, 196))
+    rect(x, y + h - 10, x + w, y + h, fill=(170, 150, 120))
+    # a tap dripping dark water into a cup, a hazard sign beside it
+    tx = x + 28
+    rect(tx, y + 23, tx + 26, y + 28, fill=(130, 136, 146))
+    rect(tx + 20, y + 28, tx + 26, y + 33, fill=(130, 136, 146))
+    for k, r in enumerate((2.2, 2.6)):
+        ell(tx + 23, y + 36 + k * 5, r * 0.8, r, fill=(70, 80, 50))
+    poly([(tx + 13, y + 44), (tx + 33, y + 44), (tx + 31, y + h - 10), (tx + 15, y + h - 10)], (230, 232, 236))
+    rect(tx + 15, y + 46, tx + 31, y + 49, fill=(80, 92, 56))
+    poly([(x + 72, y + 44), (x + 84, y + 24), (x + 96, y + 44)], (240, 170, 30))
+    text(x + 84, y + 31, '!', 'heavy', 11, INK, 'ma')
+    text(x + w - 8, y + 4, '99%', 'black', 20, (184, 44, 40), 'ra')
+    text(x + w - 8, y + 26, 'of Gaza', 'demi', 9.5, GREY, 'ra')
 
 
 def art_cricket(x, y, w, h):
-    rect(x, y, x + w, y + h, fill=(92, 160, 80))
-    rect(x + 30, y + 8, x + 60, y + h, fill=(214, 196, 150))
+    rect(x, y, x + w, y + h, fill=(84, 150, 74))
+    for k in range(4):
+        rect(x + k * 40, y, x + k * 40 + 20, y + h, fill=(92, 160, 82))
+    rect(x + 32, y + 6, x + 62, y + h, fill=(214, 196, 150))
     for k in range(3):
-        rect(x + 40 + k * 4, y + 12, x + 41.5 + k * 4, y + 28, fill=(250, 250, 250))
-    rect(x + w - 70, y + 8, x + w - 6, y + 32, fill=(20, 30, 20), r=3)
-    text(x + w - 38, y + 9, '239-5', 'heavy', 16, (250, 210, 90), 'ma')
+        rect(x + 42 + k * 4, y + 10, x + 43.5 + k * 4, y + 26, fill=(250, 250, 250))
+    line([(x + 41, y + 10), (x + 52, y + 10)], (250, 250, 250), 1)
+    rect(x + w - 74, y + 6, x + w - 6, y + 34, fill=(20, 30, 20), r=3)
+    text(x + w - 40, y + 7, '239-5', 'heavy', 15, (250, 210, 90), 'ma')
+    text(x + w - 40, y + 23, '120 OVERS', 'heavy', 7.5, (200, 230, 200), 'ma')
 
 
 def art_gas(x, y, w, h):
-    sky(x, y, w, h, (24, 30, 56), (50, 60, 96))
-    poly([(x + 40, y + 8), (x + 54, y + 30), (x + 48, y + h - 6), (x + 32, y + h - 6), (x + 26, y + 30)], (70, 140, 240))
-    poly([(x + 40, y + 22), (x + 47, y + 34), (x + 44, y + h - 8), (x + 36, y + h - 8), (x + 33, y + 34)], (170, 210, 255))
-    text(x + w - 8, y + 8, '+8.6%', 'black', 18, (255, 200, 90), 'ra')
+    sky(x, y, w, h, (22, 28, 54), (48, 58, 94))
+    rect(x + 18, y + h - 10, x + 62, y + h - 6, fill=(150, 150, 160))
+    for k in range(4):
+        fx = x + 24 + k * 10
+        poly([(fx - 4, y + h - 10), (fx, y + h - 30), (fx + 4, y + h - 10)], (70, 140, 240))
+        poly([(fx - 2, y + h - 10), (fx, y + h - 22), (fx + 2, y + h - 10)], (190, 220, 255))
+    # snowflake for the forecast cold snap
+    sx, sy = x + 90, y + 18
+    for a, b in (((0, -8), (0, 8)), ((-7, -4), (7, 4)), ((-7, 4), (7, -4))):
+        line([(sx + a[0], sy + a[1]), (sx + b[0], sy + b[1])], (220, 235, 255), 1.6)
+    text(x + w - 8, y + 4, '+8.6%', 'black', 18, (255, 200, 90), 'ra')
+    text(x + w - 8, y + 24, '€96.08 peak', 'demi', 9.5, (220, 226, 240), 'ra')
 
 
 ART_FNS = {k[4:]: v for k, v in globals().items() if k.startswith('art_')}
